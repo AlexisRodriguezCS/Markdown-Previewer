@@ -1,0 +1,69 @@
+const { useState, useEffect } = React;
+
+function App() {
+  const [theData, setTheData] = useState([]);
+  const [randomNum, setRandomNum] = useState();
+
+  const API =
+    "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json";
+
+  //------------------------------------------------------>
+  // when component first mounts, it makes an API call to get data
+  useEffect(() => {
+    fetch(API)
+      .then((res) => res.json())
+      .then((data) => setTheData(data.quotes));
+  }, []);
+  //-------------------------------------------------------
+
+  //------------------------------------------------------>
+  // function to load random quote when data is received
+  useEffect(() => {
+    newQuote();
+  }, [theData]);
+  //-------------------------------------------------------
+
+  //------------------------------------------------------>
+  // function to get random number
+  const randomNumber = () => {
+    return Math.floor(Math.random() * theData.length);
+  };
+  //-------------------------------------------------------
+
+  //------------------------------------------------------>
+  // onClick function to set new quote
+  const newQuote = () => {
+    setRandomNum(randomNumber());
+  };
+  //-------------------------------------------------------
+
+  return (
+    <div id="content">
+      <div id="quote-box">
+        <div id="text-box">
+          {theData.length && <p id="text">{theData[randomNum].quote}</p>}
+        </div>
+        <div id="author-box">
+          {theData.length && <h4 id="author">-{theData[randomNum].author}</h4>}
+        </div>
+        <div id="buttons-box">
+          {theData.length && (
+            <a
+              href={`https://twitter.com/intent/tweet?text=${theData[randomNum].quote} -${theData[randomNum].author}`}
+              id="tweet-quote"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <i class="fa fa-twitter" id="twitter-icon" aria-hidden="true"></i>
+            </a>
+          )}
+          <button type="button " id="new-quote" onClick={() => newQuote()}>
+            New Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));

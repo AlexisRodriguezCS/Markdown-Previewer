@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+#new-quote, #twitter-icon {
+  text-shadow: 2px 2px #204051;
+}
+
+#new-quote:hover, #twitter-icon:hover {
+  cursor: pointer;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  color: #eeeeee;
+}
+
+body {
+  display: block;
+  overflow-x: hidden;
+  width: 100vw;
+  background-color: #3b6978;
+}
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+/* Quote */
+#quote-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  min-height: 50vh;
+  border-radius: 4px;
+  background-color: #84a9ac;
+  width: 60%;
+  margin: 40px;
+  padding: 30px 50px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  text-shadow: 2px 2px #204051;
+}
+
+#text {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 2.7rem;
+  letter-spacing: 0.03em;
+}
+
+/* Author */
+#author-box {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+#author {
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+/* Bottom Links */
+#buttons-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#buttons-box a {
+  text-decoration: none;
+}
+#buttons-box button {
+  border: none;
+}
+
+/* Tweet Icon */
+#tweet-quote {
+  padding: 10px;
+}
+
+#twitter-icon {
+  font-size: 2.5rem;
+}
+#twitter-icon:hover {
+  color: #1b262c;
+}
+
+/* New Quote button */
+#new-quote {
+  font-size: 1.1rem;
+  padding: 15px;
+  background-color: #3b6978;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+#new-quote:hover {
+  background-color: #1b262c;
+}
+
+@media screen and (min-width: 1920px) {
+  #quote-box {
+    width: 60%;
+  }
+
+  #text {
+    font-size: 2.6rem;
+    line-height: 3.3rem;
+  }
+
+  #twitter-icon {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 2200px) {
+  #text {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+
+  #author {
+    font-size: 2.7rem;
+  }
+
+  #twitter-icon {
+    font-size: 4.5rem;
+  }
+
+  #new-quote {
+    font-size: 2rem;
+    padding: 25px;
+  }
+}
+@media only screen and (min-width: 767px) and (max-width: 1100px) {
+  #quote-box {
+    width: 60%;
+  }
+
+  #text {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  #author {
+    font-size: 1rem;
+  }
+
+  #new-quote {
+    padding: 10px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  #quote-box {
+    width: 70%;
+  }
+
+  #text {
+    font-size: 1.7rem;
+    line-height: 2.1rem;
+  }
+
+  #author {
+    font-size: 1.3rem;
+  }
+
+  #twitter-icon {
+    font-size: 2rem;
+  }
+
+  #new-quote {
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  #text {
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+  }
+
+  #author {
+    font-size: 1.2rem;
+  }
+
+  #twitter-icon {
+    font-size: 2rem;
+  }
+
+  #new-quote {
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 425px) {
+  #text {
+    padding: 5px;
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+  }
+
+  #author {
+    font-size: 1.2rem;
+  }
+
+  #twitter-icon {
+    font-size: 2rem;
+  }
+
+  #new-quote {
+    font-size: 1rem;
+  }
+}
+/* 
+Things left to do
+
+1. color change function 
+  get a color then make it a 25% darker and then 50% darker
+  also get a light shade of that color too for quote box background 
+  keep text white
+
+2. use transfromation to make it smoother 
+  probably needs an add on for react 
+*/
