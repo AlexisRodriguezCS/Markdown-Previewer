@@ -1,227 +1,183 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-#new-quote, #twitter-icon {
-  text-shadow: 2px 2px #204051;
-}
-
-#new-quote:hover, #twitter-icon:hover {
-  cursor: pointer;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap");
 * {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
-  color: #eeeeee;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+textarea {
+  resize: none;
 }
 
 body {
-  display: block;
+  background-color: #333533;
   overflow-x: hidden;
-  width: 100vw;
-  background-color: #3b6978;
 }
 
-#content {
+/* Holds both Editor & Preview */
+#wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
-/* Quote */
-#quote-box {
+/* Style used by Editor & Preview */
+/* Container for buttons */
+#btns {
+  display: flex;
+  flex: 1 1 30%;
+  justify-content: flex-end;
+}
+
+/* Buttons */
+#preview-expand,
+#editor-clear,
+#editor-expand {
+  border: none;
+  border-radius: 5px;
+  padding: 7px 6px;
+  background-color: #40916c;
+  color: #edf2f4;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1.4px;
+  text-shadow: 2px 1px #333533;
+}
+#preview-expand:hover,
+#editor-clear:hover,
+#editor-expand:hover {
+  background-color: #74c69d;
+  cursor: pointer;
+}
+
+/* Margin between buttons */
+#editor-expand {
+  margin-left: 10px;
+}
+
+/* Titles */
+#editor-title,
+#preview-title {
+  flex: 1 1 70%;
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1.6px;
+  padding-left: 5px;
+}
+
+/* Container for editor */
+#editor-container-small, #preview-container-small, #preview-container-big, #editor-container-big {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  min-height: 50vh;
-  border-radius: 4px;
-  background-color: #84a9ac;
-  width: 60%;
-  margin: 40px;
-  padding: 30px 50px;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  text-shadow: 2px 2px #204051;
-}
-
-#text {
-  text-align: center;
-  font-size: 1.9rem;
-  font-weight: 900;
-  line-height: 2.7rem;
-  letter-spacing: 0.03em;
-}
-
-/* Author */
-#author-box {
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-#author {
-  font-size: 1.5rem;
-  letter-spacing: 0.04em;
-}
-
-/* Bottom Links */
-#buttons-box {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  width: 45%;
+  height: 90vh;
 }
-#buttons-box a {
-  text-decoration: none;
+
+/* When editor expands */
+#editor-container-big {
+  width: 90%;
 }
-#buttons-box button {
+
+/* Editor bar normal and expanded */
+#editor-bar-small, #preview-bar-small, #preview-bar-big,
+#editor-bar-big {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: #242423;
+  width: 100%;
+  box-shadow: 2px 2px 3px #242423;
+}
+
+/* Inside of editor */
+#editor-small, #editor-big {
+  padding: 5px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #242423;
+  width: 100%;
+  min-height: 85vh;
+  background-color: #cad2c5;
+  box-shadow: 2px 2px 3px #242423;
   border: none;
+  font-size: 15px;
 }
 
-/* Tweet Icon */
-#tweet-quote {
-  padding: 10px;
+/* Editor when expanded */
+#editor-big {
+  width: 100%;
 }
 
-#twitter-icon {
-  font-size: 2.5rem;
-}
-#twitter-icon:hover {
-  color: #1b262c;
+/* Preview when small */
+#preview-container-small, #preview-container-big {
+  height: 90vh;
 }
 
-/* New Quote button */
-#new-quote {
-  font-size: 1.1rem;
-  padding: 15px;
-  background-color: #3b6978;
-  border-radius: 4px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  word-spacing: 2px;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-}
-#new-quote:hover {
-  background-color: #1b262c;
+/* Preview when expanded */
+#preview-container-big {
+  width: 100%;
 }
 
-@media screen and (min-width: 1920px) {
-  #quote-box {
-    width: 60%;
+/* Preview */
+#preview-small, #preview-big {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #242423;
+  width: 100%;
+  min-height: 85vh;
+  background-color: #cad2c5;
+  box-shadow: 2px 2px 3px #242423;
+  text-align: left;
+}
+#preview-small img, #preview-big img {
+  width: 75px;
+}
+#preview-small li, #preview-big li {
+  list-style-position: inside;
+}
+#preview-small a, #preview-big a {
+  text-decoration: none;
+  color: #40916c;
+}
+
+/* Preview Expanded */
+#preview-big {
+  width: 90%;
+}
+
+/* Preview Bar */
+/* Preview Bar Expanded*/
+#preview-bar-big {
+  width: 90%;
+}
+
+/*  Small screens, laptops */
+@media only screen and (max-width: 1024px) {
+  /* Buttons */
+  /* Inside of editor */
+}
+/* iPads, Tablets */
+@media only screen and (max-width: 768px) {
+  #wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
   }
 
-  #text {
-    font-size: 2.6rem;
-    line-height: 3.3rem;
-  }
-
-  #twitter-icon {
-    font-size: 3rem;
+  /* Container for editor */
+  #editor-container-small, #editor-container-big, #preview-container-small, #preview-container-big {
+    width: 90%;
   }
 }
-@media screen and (min-width: 2200px) {
-  #text {
-    font-size: 4rem;
-    line-height: 4rem;
-  }
-
-  #author {
-    font-size: 2.7rem;
-  }
-
-  #twitter-icon {
-    font-size: 4.5rem;
-  }
-
-  #new-quote {
-    font-size: 2rem;
-    padding: 25px;
-  }
-}
-@media only screen and (min-width: 767px) and (max-width: 1100px) {
-  #quote-box {
-    width: 60%;
-  }
-
-  #text {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    margin-bottom: 20px;
-  }
-
-  #author {
-    font-size: 1rem;
-  }
-
-  #new-quote {
-    padding: 10px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  #quote-box {
-    width: 70%;
-  }
-
-  #text {
-    font-size: 1.7rem;
-    line-height: 2.1rem;
-  }
-
-  #author {
-    font-size: 1.3rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-@media only screen and (max-width: 500px) {
-  #text {
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-  }
-
-  #author {
-    font-size: 1.2rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-@media only screen and (max-width: 425px) {
-  #text {
-    padding: 5px;
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-  }
-
-  #author {
-    font-size: 1.2rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-/* 
-Things left to do
-
-1. color change function 
-  get a color then make it a 25% darker and then 50% darker
-  also get a light shade of that color too for quote box background 
-  keep text white
-
-2. use transfromation to make it smoother 
-  probably needs an add on for react 
-*/
+/* Mobile devices */

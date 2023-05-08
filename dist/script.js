@@ -1,67 +1,214 @@
 const { useState, useEffect } = React;
 
 function App() {
-  const [theData, setTheData] = useState([]);
-  const [randomNum, setRandomNum] = useState();
+  // Text inside the Editor & Preview
+  const [previewText, setPreviewText] = useState("");
+  const [textArea, setTextArea] = useState("");
 
-  const API =
-  "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json";
+  // Set default size of Editor & Preview to small
+  const [editorSize, setEditorSize] = useState("small");
+  const [previewSize, setPreviewSize] = useState("small");
 
-  //------------------------------------------------------>
-  // when component first mounts, it makes an API call to get data
+  // Button text that will change when clicked
+  // (Expand <-> Shrink)
+  const [buttonText, setButtonText] = useState("Expand");
+
+  // Boolean to keep track
+  const [editorExpand, setEditorExpand] = useState(false);
+  const [previewExpand, setPreviewExpand] = useState(false);
+
+  // Keeps track of the width
+  const [width, setWidth] = useState(window.innerWidth);
+
+  // Default text inside Editor
+  const defaultText = `## Visit [here](https://daringfireball.net/projects/markdown/basics) to learn more about Markdown
+# This is an H1 tag
+## This is an H2 tag
+### This is an  \`<h3>\` tag
+>This is a blockquote
+\\
+*This text will be italic*
+_This will also be italic_
+\\
+**This text will be bold**
+__This will also be bold__
+\\
+_You **can** combine them_  
+ 
+* Item 1
+  * Item 2
+
+\`\`\`
+Multi-line code:
+
+function fullName(firstName, lastName) {
+    return firstName  + '  ' +  lastName;
+}
+\`\`\`  
+\\
+![Markdown Logo](https://kirkstrobeck.github.io/whatismarkdown.com/img/markdown.png)`;
+
+  // Markdown
+  const markdown = new marked.Renderer();
+
+  marked.setOptions({
+    breaks: true });
+
+
+  // Update/Stores the input entered in the text area
+  // into textArea String
+  const handleChange = e => {
+    setTextArea(e.target.value);
+  };
+
+  // On load set the default text for Editor
+  // and Mobile changes
   useEffect(() => {
-    fetch(API).
-    then(res => res.json()).
-    then(data => setTheData(data.quotes));
+    setTextArea(defaultText);
+    mobile();
   }, []);
-  //-------------------------------------------------------
 
-  //------------------------------------------------------>
-  // function to load random quote when data is received
+  // Everytime the width changes update the width variable
   useEffect(() => {
-    newQuote();
-  }, [theData]);
-  //-------------------------------------------------------
+    // function to set width to current window width
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+    // Event listener that call handleResize function when
+    // resize event happens
+    window.addEventListener("resize", handleResize);
+    // Functions that update components depending on width
+    console.log("In first: ", width);
+    mobile();
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
 
-  //------------------------------------------------------>
-  // function to get random number
-  const randomNumber = () => {
-    return Math.floor(Math.random() * theData.length);
-  };
-  //-------------------------------------------------------
+  // Update Preview when text is entered in the Editor
+  useEffect(() => {
+    setPreviewText(textArea);
+  }, [textArea]);
 
-  //------------------------------------------------------>
-  // onClick function to set new quote
-  const newQuote = () => {
-    setRandomNum(randomNumber());
-  };
-  //-------------------------------------------------------
+  // When window size is less than 768px (Tablet/Mobile)
+  // change "Expand" text to "Preview"
+  function mobile() {
+    if (window.innerWidth <= 768) {
+      setButtonText("Preview");
+      setEditorExpand(true);
+    }
+  }
 
+  // Clears the text in the Editor
+  function clearText() {
+    setTextArea("");
+  }
+
+  // When Expand, Shrink, Preview, or Editor button is pressed
+  function handleClick(divSize, setDivSize, divExpand, setDivExpand) {
+    if (window.innerWidth <= 768) {
+      // Mobile logic
+      // Toggle text from "Preview" <-> "Editor"
+      buttonText == "Preview" ?
+      setButtonText("Editor") :
+      setButtonText("Preview");
+      // Toggle Editor moduele <-> Preview module
+      if (editorExpand == true) {
+        setEditorExpand(false);
+        setPreviewExpand(true);
+      } else {
+        setEditorExpand(true);
+        setPreviewExpand(false);
+      }
+    } else {
+      // Desktop logic
+      divSize == "small" ? setDivSize("big") : setDivSize("small");
+      setDivExpand(!divExpand);
+      buttonText == "Expand" ?
+      setButtonText("Shrink") :
+      setButtonText("Expand");
+    }
+  }
+
+  // Editor component
+  function Editor() {
+    return /*#__PURE__*/(
+      React.createElement(React.Fragment, null, /*#__PURE__*/
+      React.createElement("div", { id: `editor-container-${editorSize}` }, /*#__PURE__*/
+      React.createElement("div", { id: `editor-bar-${editorSize}` }, /*#__PURE__*/
+      React.createElement("label", { id: "editor-title" }, "Editor"), /*#__PURE__*/
+      React.createElement("div", { id: "btns" }, /*#__PURE__*/
+      React.createElement("button", { id: "editor-clear", onClick: () => clearText() }, "Clear"), /*#__PURE__*/
+
+
+      React.createElement("button", {
+        id: "editor-expand",
+        onClick: () =>
+        handleClick(
+        editorSize,
+        setEditorSize,
+        editorExpand,
+        setEditorExpand) },
+
+
+
+      buttonText))), /*#__PURE__*/
+
+
+
+      React.createElement("textarea", {
+        id: `editor-${editorSize}`,
+        value: textArea,
+        onChange: e => handleChange(e) }))));
+
+
+
+
+  }
+
+  // Preview component
+  function Preview() {
+    return /*#__PURE__*/(
+      React.createElement(React.Fragment, null, /*#__PURE__*/
+      React.createElement("div", { id: `preview-container-${previewSize}` }, /*#__PURE__*/
+      React.createElement("div", { id: `preview-bar-${previewSize}` }, /*#__PURE__*/
+      React.createElement("label", { id: "preview-title" }, "Preview"), /*#__PURE__*/
+      React.createElement("div", { id: "btns" }, /*#__PURE__*/
+      React.createElement("button", {
+        id: "preview-expand",
+        onClick: () =>
+        handleClick(
+        previewSize,
+        setPreviewSize,
+        previewExpand,
+        setPreviewExpand) },
+
+
+
+      buttonText))), /*#__PURE__*/
+
+
+
+      React.createElement("div", {
+        id: `preview-${previewSize}`,
+        dangerouslySetInnerHTML: {
+          __html: marked(previewText, { renderer: markdown }) } }))));
+
+
+
+
+
+  }
+
+  // Using state(previewExpand, editorExpand) to decide what component(s) will render.
+  // Return Editor & Preview if both previewExpand && editorExpand equal fasle to
+  // show both components at once next to each other.
+  // Else if previewExpand is true then the Editor component will not return and
+  // only the Preview component will be displayed.
+  // Else if editorExpand is true then the Preview component will not return and
+  // only the Editor component will be displayed.
   return /*#__PURE__*/(
-    React.createElement("div", { id: "content" }, /*#__PURE__*/
-    React.createElement("div", { id: "quote-box" }, /*#__PURE__*/
-    React.createElement("div", { id: "text-box" },
-    theData.length && /*#__PURE__*/React.createElement("p", { id: "text" }, theData[randomNum].quote)), /*#__PURE__*/
-
-    React.createElement("div", { id: "author-box" },
-    theData.length && /*#__PURE__*/React.createElement("h4", { id: "author" }, "-", theData[randomNum].author)), /*#__PURE__*/
-
-    React.createElement("div", { id: "buttons-box" },
-    theData.length && /*#__PURE__*/
-    React.createElement("a", {
-      href: `https://twitter.com/intent/tweet?text=${theData[randomNum].quote} -${theData[randomNum].author}`,
-      id: "tweet-quote",
-      target: "_blank",
-      rel: "noreferrer noopener" }, /*#__PURE__*/
-
-    React.createElement("i", { class: "fa fa-twitter", id: "twitter-icon", "aria-hidden": "true" })), /*#__PURE__*/
-
-
-    React.createElement("button", { type: "button ", id: "new-quote", onClick: () => newQuote() }, "New Quote")))));
-
-
-
-
+    React.createElement("div", { id: "wrapper" },
+    !previewExpand && Editor(),
+    !editorExpand && Preview()));
 
 
 }

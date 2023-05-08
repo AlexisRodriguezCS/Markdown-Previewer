@@ -52,7 +52,7 @@ function fullName(firstName, lastName) {
   const markdown = new marked.Renderer();
 
   marked.setOptions({
-    breaks: true
+    breaks: true,
   });
 
   // Update/Stores the input entered in the text area
@@ -190,7 +190,7 @@ function fullName(firstName, lastName) {
           <div
             id={`preview-${previewSize}`}
             dangerouslySetInnerHTML={{
-              __html: marked(previewText, { renderer: markdown })
+              __html: marked(previewText, { renderer: markdown }),
             }}
           ></div>
         </div>

@@ -1,298 +1,207 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap");
 
-$font-stack: "Montserrat", sans-serif;
-$text-color: #eeeeee;
-$primary-color: #3b6978;
-$secondary-color: #84a9ac;
-$shadow-color: #204051;
-$active-color: #1b262c;
+$font-text: "Noto Sans TC", sans-serif;
+$font-title: "Poppins", sans-serif;
 
-%sass-extend {
-  text-shadow: 2px 2px $shadow-color;
-  &:hover {
-    cursor: pointer;
-  }
-}
+$background-color: #333533;
+$bg-color: #cad2c5;
+$banner-color: #242423;
+$btn-color: #40916c;
+$btn-text-color: #edf2f4;
+$hover-color: #74c69d;
+$text-color: #242423;
 
 * {
   margin: 0;
   padding: 0;
-  font-family: $font-stack;
-  color: $text-color;
+  font-family: $font-text;
+}
+
+textarea {
+  resize: none;
 }
 
 body {
-  display: block;
+  background-color: $background-color;
   overflow-x: hidden;
-  width: 100vw;
-  background-color: $primary-color;
 }
 
-#content {
+/* Holds both Editor & Preview */
+#wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   min-height: 100vh;
-  width: 100vw;
-  // background-color: black;
+  width: 100%;
 }
 
-/* Quote */
-#quote-box {
+/* Style used by Editor & Preview */
+@mixin box {
+  padding: 5px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: $text-color;
+  width: 100%;
+  min-height: 85vh;
+  background-color: $bg-color;
+  box-shadow: 2px 2px 3px $banner-color;
+}
+
+/* Container for buttons */
+#btns {
+  display: flex;
+  flex: 1 1 30%;
+  justify-content: flex-end;
+  // width: 13vw;
+}
+
+/* Buttons */
+#preview-expand,
+#editor-clear,
+#editor-expand {
+  border: none;
+  border-radius: 5px;
+  padding: 7px 6px;
+  background-color: $btn-color;
+  color: $btn-text-color;
+  font-family: $font-title;
+  letter-spacing: 1.4px;
+  text-shadow: 2px 1px $background-color;
+  &:hover {
+    background-color: $hover-color;
+    cursor: pointer;
+  }
+}
+
+/* Margin between buttons */
+#editor-expand {
+  margin-left: 10px;
+}
+
+/* Titles */
+#editor-title,
+#preview-title {
+  flex: 1 1 70%;
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+  font-family: $font-title;
+  letter-spacing: 1.6px;
+  padding-left: 5px;
+}
+
+/* Container for editor */
+#editor-container-small {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  min-height: 50vh;
-  border-radius: 4px;
-  background-color: $secondary-color;
-  width: 60%;
-  margin: 40px;
-  padding: 30px 50px;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  text-shadow: 2px 2px $shadow-color;
-}
-
-#text {
-  text-align: center;
-  font-size: 1.9rem;
-  font-weight: 900;
-  // padding: 15px 10px 0px 10px;
-  line-height: 2.7rem;
-  letter-spacing: 0.03em;
-}
-
-/* Author */
-#author-box {
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-#author {
-  font-size: 1.5rem;
-  // padding: 5px 10px 12px 10px;
-  // margin: 5px;
-  letter-spacing: 0.04em;
-}
-
-/* Bottom Links */
-#buttons-box {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  // height: 6vh;
-  // background-color: black;
+  width: 45%;
+  height: 90vh;
+}
+
+/* When editor expands */
+#editor-container-big {
+  @extend #editor-container-small;
+  width: 90%;
+}
+
+/* Editor bar normal and expanded */
+#editor-bar-small,
+#editor-bar-big {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: $banner-color;
+  width: 100%;
+  box-shadow: 2px 2px 3px $banner-color;
+}
+
+/* Inside of editor */
+#editor-small {
+  @include box;
+  border: none;
+  font-size: 15px;
+}
+
+/* Editor when expanded */
+#editor-big {
+  @extend #editor-small;
+  width: 100%;
+}
+
+/* Preview when small */
+#preview-container-small {
+  @extend #editor-container-small;
+  height: 90vh;
+}
+
+/* Preview when expanded */
+#preview-container-big {
+  @extend #preview-container-small;
+  width: 100%;
+}
+
+/* Preview */
+#preview-small {
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include box;
+  text-align: left;
+  img {
+    width: 75px;
+  }
+  li {
+    list-style-position: inside;
+  }
   a {
     text-decoration: none;
-  }
-  button {
-    border: none;
+    color: $btn-color;
   }
 }
 
-/* Tweet Icon */
-#tweet-quote {
-  padding: 10px;
-  // margin: 5px;
+/* Preview Expanded */
+#preview-big {
+  @extend #preview-small;
+  width: 90%;
 }
 
-#twitter-icon {
-  font-size: 2.5rem;
-  @extend %sass-extend;
-  &:hover {
-    color: $active-color;
-  }
+/* Preview Bar */
+#preview-bar-small {
+  @extend #editor-bar-small;
 }
 
-/* New Quote button */
-#new-quote {
-  font-size: 1.1rem;
-  // height: 100%;
-  padding: 15px;
-  // margin: 12px;
-  background-color: $primary-color;
-  border-radius: 4px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  word-spacing: 2px;
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  @extend %sass-extend;
-  &:hover {
-    background-color: $active-color;
-  }
+/* Preview Bar Expanded*/
+#preview-bar-big {
+  @extend #preview-bar-small;
+  width: 90%;
 }
 
-@media screen and (min-width: 1280px) {
-  //For Big TV's (HD Screens)
-  // #content {
-  //   background-color: orange;
-  // }
+/*  Small screens, laptops */
+@media only screen and (max-width: 1024px) {
 }
 
-@media screen and (min-width: 1920px) {
-  // For Projectors or Higher Resolution Screens (Full HD)
-  // #content {
-  //   background-color: yellow;
+/* iPads, Tablets */
+@media only screen and (max-width: 768px) {
+  // body {
+  //   background-color: blue;
   // }
 
-  #quote-box {
-    // height: 70%;
-    width: 60%;
+  #wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
   }
 
-  #text {
-    font-size: 2.6rem;
-    line-height: 3.3rem;
-  }
-
-  // #author {
-  //   font-size: 2rem;
-  // }
-
-  #twitter-icon {
-    font-size: 3rem;
+  /* Container for editor */
+  #editor-container-small {
+    width: 90%;
   }
 }
 
-@media screen and (min-width: 2200px) {
-  // #content {
-  //   background-color: pink;
-  // }
-
-  #text {
-    font-size: 4rem;
-    line-height: 4rem;
-  }
-
-  #author {
-    font-size: 2.7rem;
-  }
-
-  #twitter-icon {
-    font-size: 4.5rem;
-  }
-
-  #new-quote {
-    font-size: 2rem;
-    padding: 25px;
-  }
+/* Mobile devices */
+@media only screen and (max-width: 480px) {
 }
-
-@media only screen and (min-width: 767px) and (max-width: 1100px) {
-  // #content {
-  //   background-color: black;
-  // }
-
-  #quote-box {
-    width: 60%;
-  }
-
-  #text {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    margin-bottom: 20px;
-  }
-
-  #author {
-    font-size: 1rem;
-  }
-
-  #new-quote {
-    padding: 10px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  // #content {
-  //   background-color: green;
-  // }
-
-  #quote-box {
-    width: 70%;
-  }
-
-  #text {
-    font-size: 1.7rem;
-    line-height: 2.1rem;
-  }
-
-  #author {
-    font-size: 1.3rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  // #content {
-  //   background-color: red;
-  // }
-
-  // #quote-box {
-  //   width: 100%;
-  // }
-
-  #text {
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-  }
-
-  #author {
-    font-size: 1.2rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-
-@media only screen and (max-width: 425px) {
-  // #content {
-  //   background-color: gray;
-  // }
-
-  #quote-box {
-    // width: 250px;
-  }
-
-  #text {
-    padding: 5px;
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-  }
-
-  #author {
-    font-size: 1.2rem;
-  }
-
-  #twitter-icon {
-    font-size: 2rem;
-  }
-
-  #new-quote {
-    font-size: 1rem;
-  }
-}
-
-/* 
-Things left to do
-
-1. color change function 
-  get a color then make it a 25% darker and then 50% darker
-  also get a light shade of that color too for quote box background 
-  keep text white
-
-2. use transfromation to make it smoother 
-  probably needs an add on for react 
-*/
